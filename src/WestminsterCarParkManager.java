@@ -47,6 +47,7 @@ public class WestminsterCarParkManager implements CarParkManager {
 
     public static void displayMainMenu() {
         CarParkManager carParkObject = new WestminsterCarParkManager();
+        carParkObject.CareTaker();
         int t=0;
 
         while (true) {//infinity loop
@@ -71,6 +72,7 @@ public class WestminsterCarParkManager implements CarParkManager {
                     break;
                 case "2":
                     carParkObject.deleteVehicle();
+                    carParkObject.CareTaker();
                     break;
                 case "3":
                     carParkObject.displayCurrentList();
@@ -82,7 +84,7 @@ public class WestminsterCarParkManager implements CarParkManager {
                     carParkObject.displayPerDayList();
                     break;
                 case "6":
-                    if(!parkingCareTaker.isEmpty()){    
+                    if(parkingCareTaker.size()>1){    
                     carParkObject.Undo();
                     System.out.println("Previous status successfully updated");
                     } else {
@@ -366,6 +368,9 @@ public class WestminsterCarParkManager implements CarParkManager {
 
     // Override
     public void displayCurrentList() {
+        System.out.println("CurrentList : ");
+        System.out.println(Arrays.asList(vehicleOrderList));
+        System.out.println("Current list size : " + vehicleOrderList.size());
         if (vehicleOrderList.size() == 0) {
             System.out.println("No vehicles are currently available in the parking space");
         }
@@ -514,12 +519,22 @@ public class WestminsterCarParkManager implements CarParkManager {
     @Override
     public void CareTaker() {
         parkingCareTaker.adicionarMemento(Arrays.copyOf(vehicleParkingSlots, 20));
+        parkingCareTaker.adicionarMemento2(vehicleOrderList);
     }
 
     @Override
     public void Undo() {
+        
+        //System.out.println("Primerio array : ");
+        //System.out.println(Arrays.asList(vehicleParkingSlots));
+        System.out.println("Primeiro Order List : ");
+        System.out.println(Arrays.asList(vehicleOrderList));
         vehicleParkingSlots = parkingCareTaker.getUltimoSalvo();
-        System.out.println("Segundo array : ");
-        System.out.println(Arrays.asList(vehicleParkingSlots));
+        vehicleOrderList = parkingCareTaker.getUltimoInteger();
+        //System.out.println("Segundo array : ");
+        //System.out.println(Arrays.asList(vehicleParkingSlots));
+        System.out.println("Ultimo integer : ");
+        System.out.println(Arrays.asList(vehicleOrderList));
+        
     }
 }
