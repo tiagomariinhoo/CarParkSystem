@@ -12,4 +12,8 @@ interface CarParkManager {
 	public abstract void displayPerDayList();
 
 	public abstract void displayParkingCharges();
+        
+        public abstract void CareTaker();
+        
+        public abstract void Undo();
 }
